@@ -1,9 +1,28 @@
 "use client";
-import React from "react";
+import {useState} from "react";
 import Link from "next/link";
 import { UploadFileForms } from "./UploadFileForms";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from '@/components/firebase';
+
 
 export const Navbar = () => {
+  const [email, setEmail] = useState('')
+  const [userid, setUserid] = useState('')
+  onAuthStateChanged(auth, (user) => {
+   
+
+    if (user) {
+      const uid = user.email;
+      const userids = user.uid;
+      const text = uid.slice(0,2)
+      console.log(text)
+      setEmail(text)
+    } else {
+      
+    }
+  });
+
   return (
     <div className="navbar bg-blue-950">
       <div className="flex-1">
@@ -64,8 +83,8 @@ export const Navbar = () => {
             className="btn btn-ghost btn-circle"
           >
             <div className="w-10 rounded-full bg-base-100 p-3">
-              <p className="text-center">
-                HE
+              <p className="text-center text-white capitalize">
+                {email}
                 </p>
             </div>
           </div>
@@ -76,7 +95,9 @@ export const Navbar = () => {
             <li>
               <a>Settings</a>
             </li>
-            <li>
+            <li onClick={()=>
+            {signOut(auth)
+           }}>
               <a>Logout</a>
             </li>
           </ul>

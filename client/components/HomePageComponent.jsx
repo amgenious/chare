@@ -1,9 +1,24 @@
+'use client'
 import { folders } from '@/data/constant'
 import Link from 'next/link'
 import { Navbar } from './navbar'
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from '@/components/firebase';
+import { useRouter } from 'next/navigation';
 
 
 export const HomePageComponent = () => {
+    const router = useRouter();
+    onAuthStateChanged(auth, (user) => {
+
+
+        if (!user) {
+            router.push('/auth/login')
+        } else {
+            console.log("home page")
+        }
+      });
+
   return (
     <>
      <Navbar />
