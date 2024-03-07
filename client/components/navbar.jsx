@@ -8,15 +8,11 @@ import { auth } from '@/components/firebase';
 
 export const Navbar = () => {
   const [email, setEmail] = useState('')
-  const [userid, setUserid] = useState('')
   onAuthStateChanged(auth, (user) => {
    
-
     if (user) {
       const uid = user.email;
-      const userids = user.uid;
       const text = uid.slice(0,2)
-      console.log(text)
       setEmail(text)
     } else {
       
@@ -67,7 +63,7 @@ export const Navbar = () => {
         </button>
         <dialog id="my_modal_5" className="modal">
           <div className="modal-box">
-            <h3 className="font-bold text-lg pb-5">Upload File</h3>
+            <h3 className="font-bold text-lg pb-5">Upload Document</h3>
              <UploadFileForms />
             <div className="modal-action">
               <form method="dialog">
@@ -92,6 +88,9 @@ export const Navbar = () => {
             tabIndex={0}
             className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
           >
+            <li>
+              <Link href={"/profile"}>Profile</Link >
+            </li>
             <li>
               <a>Settings</a>
             </li>

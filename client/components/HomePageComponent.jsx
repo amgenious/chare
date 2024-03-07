@@ -15,7 +15,6 @@ export const HomePageComponent = () => {
         if (!user) {
             router.push('/auth/login')
         } else {
-            console.log("home page")
         }
       });
 

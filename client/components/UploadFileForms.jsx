@@ -1,19 +1,102 @@
-import React from 'react'
+import React, { useState } from "react";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "./firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/components/firebase";
+import { useRouter } from "next/navigation";
+import { uploadFile, getFile } from "./storage";
 
 export const UploadFileForms = () => {
+  const router = useRouter();
+  const [selectedFile, setSelectedFile] = useState();
+  const [uploaded, setUploaded] = useState(false);
+  const [category, setCategory] = useState("");
+  const [documentid, setDocumentId] = useState('');
+  const [userid, setUserid] = useState("");
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const Userid = user.uid;
+      setUserid(Userid);
+    } else {
+      router.push("/auth/login");
+    }
+  });
+
+  const handleUpload = async () => {
+    const folder = "items/";
+    const imagePath = await uploadFile(selectedFile, folder);
+    const imageUrl = await getFile(imagePath);
+    setUploaded(imageUrl);
+    setDocumentId(imageUrl)
+  };
+
+
+  const handleData = async (e) => {
+    e.preventDefault();
+    
+    try {
+      console.log(userid, documentid,category,)
+      await addDoc(collection(db, "products"), {
+        document: documentid,
+        category: category,
+        userid: userid,
+        timeStamps: serverTimestamp(),
+      });
+      alert("Document sent successfully");
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  };
+
   return (
     <div>
-       <form>
-        <input placeholder='file' className='bg-transparent p-2 w-[100%] mb-2 border' type='file' required/>
-        <select className='border bg-black w-[100%] p-2 mb-5' required>
-          <option disabled readOnly>Category</option>
-          <option >document</option>
-          <option>picture</option>
-          <option>video</option>
-          <option>sound</option>
+      <form onSubmit={handleData}>
+        <input
+          placeholder="file"
+          id="file"
+          className="bg-transparent p-2 w-[100%] mb-2 border"
+          onChange={(e) => setSelectedFile(e.target.files[0])}
+          type="file"
+        />
+        <div
+          onClick={handleUpload}
+          className="btn bg-[#00375C] text-white hover:bg-white hover:text-[#00375C] mb-2"
+        >
+          Upload File
+        </div>
+        <p className="text-xs mb-2">
+          Please make sure you upload the file first before you click on the
+          send button
+        </p>
+        <p className="text-sm mb-1">Please select category</p>
+        <select
+          className="border bg-black w-[100%] p-2 mb-5"
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option disabled readOnly>
+            Category
+          </option>
+          <option value="document">document</option>
+          <option value="picture">picture</option>
+          <option value="video">video</option>
+          <option value="music">sound</option>
         </select>
-        <button className='btn bg-[#00375C] text-white hover:bg-white hover:text-[#00375C]'>Upload</button>
-       </form>
+        {uploaded ? (
+          <p className="text-green-600 mb-3">File uploaded</p>
+        ) : (
+          <p className="mb-3 text-blue-600">
+            Wait for file to upload...
+          </p>
+        )}
+        <button
+          type="submit"
+          className="btn bg-[#005c05] text-white hover:bg-white hover:text-[#005c05]"
+        >
+          Send File
+        </button>
+      </form>
     </div>
-  )
-}
+  );
+};
