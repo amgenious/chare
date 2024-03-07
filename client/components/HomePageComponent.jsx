@@ -10,8 +10,6 @@ import { useRouter } from 'next/navigation';
 export const HomePageComponent = () => {
     const router = useRouter();
     onAuthStateChanged(auth, (user) => {
-
-
         if (!user) {
             router.push('/auth/login')
         } else {

@@ -79,7 +79,8 @@ export const UploadFileForms = () => {
           onChange={(e) => setCategory(e.target.value)}
           required
         >
-          <option disabled readOnly>
+          <option></option>
+          <option disabled>
             Category
           </option>
           <option value="document">document</option>
