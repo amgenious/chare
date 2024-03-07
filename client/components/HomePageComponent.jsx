@@ -2,7 +2,7 @@
 import { folders } from '@/data/constant'
 import Link from 'next/link'
 import { Navbar } from './navbar'
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '@/components/firebase';
 import { useRouter } from 'next/navigation';
 

@@ -13,6 +13,7 @@ export const UploadFileForms = () => {
   const [category, setCategory] = useState("");
   const [documentid, setDocumentId] = useState('');
   const [userid, setUserid] = useState("");
+  const [filename, setFileName] = useState("");
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -36,11 +37,11 @@ export const UploadFileForms = () => {
     e.preventDefault();
     
     try {
-      console.log(userid, documentid,category,)
       await addDoc(collection(db, "products"), {
         document: documentid,
         category: category,
         userid: userid,
+        filename: filename,
         timeStamps: serverTimestamp(),
       });
       alert("Document sent successfully");
@@ -59,6 +60,7 @@ export const UploadFileForms = () => {
           className="bg-transparent p-2 w-[100%] mb-2 border"
           onChange={(e) => setSelectedFile(e.target.files[0])}
           type="file"
+          required
         />
         <div
           onClick={handleUpload}
@@ -70,10 +72,12 @@ export const UploadFileForms = () => {
           Please make sure you upload the file first before you click on the
           send button
         </p>
+        <input placeholder="file name" className="bg-transparent p-2 w-[100%] mb-2 border" onChange={(e)=> setFileName(e.target.value)} required/>
         <p className="text-sm mb-1">Please select category</p>
         <select
           className="border bg-black w-[100%] p-2 mb-5"
           onChange={(e) => setCategory(e.target.value)}
+          required
         >
           <option disabled readOnly>
             Category
@@ -84,18 +88,21 @@ export const UploadFileForms = () => {
           <option value="music">sound</option>
         </select>
         {uploaded ? (
-          <p className="text-green-600 mb-3">File uploaded</p>
+          <>
+          <p className="text-green-600 mb-3 text-xs">File uploaded</p>
+          <button
+          type="submit"
+          className="btn bg-[#005c05] text-white hover:bg-white hover:text-[#005c05]"
+          >
+          Send File
+        </button>
+          </>
         ) : (
-          <p className="mb-3 text-blue-600">
+          <p className="mb-3 text-blue-600 text-xs">
             Wait for file to upload...
           </p>
         )}
-        <button
-          type="submit"
-          className="btn bg-[#005c05] text-white hover:bg-white hover:text-[#005c05]"
-        >
-          Send File
-        </button>
+       
       </form>
     </div>
   );
