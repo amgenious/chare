@@ -30,7 +30,7 @@ export default function VideosPage() {
         // Fetch data only when user ID is available
         const q1 = query(
           colRef,
-          where("category", "==", "document"),
+          where("category", "==", "video"),
           where("userid", "==", Userid)
         );
         const unsubscribeSnapshot = onSnapshot(q1, (snapShot) => {
