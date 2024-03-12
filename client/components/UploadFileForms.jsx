@@ -14,6 +14,7 @@ export const UploadFileForms = () => {
   const [documentid, setDocumentId] = useState('');
   const [userid, setUserid] = useState("");
   const [filename, setFileName] = useState("");
+  const [loading, setLoading] = useState(false);
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -25,11 +26,19 @@ export const UploadFileForms = () => {
   });
 
   const handleUpload = async () => {
-    const folder = "items/";
-    const imagePath = await uploadFile(selectedFile, folder);
-    const imageUrl = await getFile(imagePath);
-    setUploaded(imageUrl);
-    setDocumentId(imageUrl)
+    setLoading(true);
+
+     try {
+      const folder = "items/";
+      const imagePath = await uploadFile(selectedFile, folder);
+      const imageUrl = await getFile(imagePath);
+      setUploaded(imageUrl);
+      setDocumentId(imageUrl);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
 
@@ -68,10 +77,14 @@ export const UploadFileForms = () => {
         >
           Upload File
         </div>
-        <p className="text-xs mb-2">
-          Please make sure you upload the file first before you click on the
-          send button
-        </p>
+        {
+        loading ? (
+          <p className="mb-3 text-blue-600 text-xs">
+            <span className="loading loading-spinner loading-md"></span>
+          </p>
+        ) :
+        uploaded ? (
+          <>
         <input placeholder="file name" className="bg-transparent p-2 w-[100%] mb-2 border" onChange={(e)=> setFileName(e.target.value)} required/>
         <p className="text-sm mb-1">Please select category</p>
         <select
@@ -88,8 +101,6 @@ export const UploadFileForms = () => {
           <option value="video">video</option>
           <option value="music">sound</option>
         </select>
-        {uploaded ? (
-          <>
           <p className="text-green-600 mb-3 text-xs">File uploaded</p>
           <button
           type="submit"
@@ -99,9 +110,7 @@ export const UploadFileForms = () => {
         </button>
           </>
         ) : (
-          <p className="mb-3 text-blue-600 text-xs">
-            Wait for file to upload...
-          </p>
+          <p className="mb-3 text-blue-600 text-xs"></p>
         )}
        
       </form>

@@ -19,7 +19,7 @@ export const HomePageComponent = () => {
   return (
     <>
      <Navbar />
-    <div className='flex flex-col gap-2 h-[93vh]'>
+    <div className='flex flex-col gap-2 h-[93vh] text-white bg-[#00375c]'>
     <div className='h-[50%] w-full shadow-sm shadow-white p-2'>
         <p className='text-center text-sm'>Please search your shared items here</p>
         <div className='flex gap-1 justify-center w-full p-5'>

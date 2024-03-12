@@ -28,13 +28,14 @@ export default function LoginPage  () {
   .catch((error) => {
    setError(true)
    setErrorMessage(error.message);
-  
   });
   }
-
   return (
-    <div className='h-screen  flex justify-center items-center '>
+    <div className='h-screen flex justify-center items-center'>
        <div className='p-5 bg-white text-[#00375C]'>
+       <div className="flex-1">
+        <h1 className="btn btn-ghost text-2xl font-extrabold">chare</h1>
+      </div>
         <h1 className='text-xl font-semibold text-center p-3'>Login</h1>
           <div className='p-5'>
             <form className='flex flex-col' onSubmit={handlelogin}>
@@ -45,9 +46,9 @@ export default function LoginPage  () {
             </form>
           </div>
           <Link href={'/auth/signup'}>
-          <p className='text-right pr-5'>Signup</p>
+          <p className='text-right pr-5 pt-5'>Signup</p>
           </Link>
-          <p className='text-right pr-5'>Forgot Password?</p>
+          <p className='text-right pr-5 pt-10'>Forgot Password?</p>
       </div>
     </div>
   )

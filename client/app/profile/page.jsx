@@ -25,12 +25,12 @@ export default function ProfilePage  ()  {
   return (
     <>
     <Navbar />
-    <div className='h-[93vh] flex justify-center items-center'>
+    <div className='h-[93vh] flex justify-center items-center bg-[#00375c]'>
         <div className='p-5 flex flex-col justify-center items-center'>
-                <div className='w-32 h-32 rounded-full bg-white  flex items-center justify-center p-2'>
+                <div className='w-32 h-32 rounded-full bg-white flex items-center justify-center p-2'>
                     <h1 className='text-[#00375C] text-5xl font-bold capitalize'>{email}</h1>
                 </div>
-                    <p className='pt-3'>{fullemail}</p>
+                    <p className='pt-3 text-white'>{fullemail}</p>
         </div>
     </div>
     </>

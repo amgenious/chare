@@ -3,9 +3,13 @@ import React from 'react'
 
 export default function AppsPage  () {
   return (
-    <div className='h-screen'>
+    <>
+    <div className='h-screen bg-[#00375c] text-white'>
       <Navbar />
-      AppsPage
+      <div className='p-5'>
+          Content coming soon
       </div>
+      </div>
+    </>
   )
 }

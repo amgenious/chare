@@ -62,7 +62,7 @@ export default function VideosPage() {
   return (
     <>
       <Navbar />
-      <div className="h-[93vh] p-5">
+      <div className="h-[93vh] p-5 text-white bg-[#00375c]">
         <div className="flex gap-5 flex-wrap">
           {data.length > 0 ? (
             data.map((items) => (

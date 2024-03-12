@@ -61,7 +61,7 @@ export default function DocumentsPage() {
   return (
     <>
       <Navbar />
-      <div className="h-[93vh] p-5">
+      <div className="h-[93vh] p-5 bg-[#00375c] text-white">
         <div className="flex gap-5 flex-wrap">
           {data.length > 0 ? (
             data.map((items) => (
@@ -113,7 +113,7 @@ export default function DocumentsPage() {
                     </div>
                     <a href={items.document} download={items.filename}>
                       <div className="cursor-pointer">
-                        <p className="ml-2">
+                        <p className="ml-10">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="blue"
